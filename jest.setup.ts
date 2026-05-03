@@ -1,5 +1,3 @@
-import '@testing-library/jest-native/extend-expect';
-
 // Mock expo-sqlite for tests
 jest.mock('expo-sqlite', () => ({
   openDatabaseAsync: jest.fn(),

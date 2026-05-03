@@ -74,10 +74,14 @@ describe('connection.ts — structural', () => {
 // ---------------------------------------------------------------
 describe('connection.ts — unit', () => {
   describe('initDatabase', () => {
-    it('should be an async function', () => {
+    it('should be an async function', async () => {
       const mod = loadModule();
       expect(mod.initDatabase).toBeInstanceOf(Function);
-      expect(mod.initDatabase.constructor.name).toBe('AsyncFunction');
+      // Returns a Promise (works across Babel transforms)
+      // Catch rejection to prevent unhandled rejection crash
+      const promise = mod.initDatabase();
+      expect(promise).toBeInstanceOf(Promise);
+      await promise.catch(() => {});
     });
 
     it('should resolve without throwing', async () => {
@@ -109,7 +113,9 @@ describe('connection.ts — unit', () => {
     });
 
     it('should throw if called before initDatabase', () => {
-      const { getDatabase } = loadModule();
+      // Reset module registry so we get a fresh module with dbInstance = null
+      jest.resetModules();
+      const { getDatabase } = require('../../src/db/connection');
       expect(() => getDatabase()).toThrow();
     });
   });

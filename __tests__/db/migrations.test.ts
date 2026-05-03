@@ -142,7 +142,9 @@ describe('migrations.ts — unit', () => {
     it('should be an async function', () => {
       const { runMigrations } = loadModule();
       expect(runMigrations).toBeInstanceOf(Function);
-      expect(runMigrations.constructor.name).toBe('AsyncFunction');
+      // Check it returns a Promise (works across Babel transforms)
+      const mockDb = { execAsync: jest.fn(), getAllAsync: jest.fn(), runAsync: jest.fn() };
+      expect(runMigrations(mockDb)).toBeInstanceOf(Promise);
     });
 
     it('should accept a database instance as parameter', () => {

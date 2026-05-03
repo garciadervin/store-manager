@@ -21,6 +21,20 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="inventory/[id]"
+        options={{
+          title: 'Producto',
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="inventory/new"
+        options={{
+          title: 'Nuevo Producto',
+          href: null,
+        }}
+      />
+      <Tabs.Screen
         name="sales/index"
         options={{
           title: 'Ventas',
@@ -48,6 +62,13 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="settings-outline" size={size} color={color} />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="settings/payment-methods"
+        options={{
+          title: 'Métodos de Pago',
+          href: null,
         }}
       />
     </Tabs>
